@@ -23,35 +23,34 @@ class Solution {
 
         return prev;
     }
-    public ListNode reverseBetween(ListNode head, int left, int right) {
-        ArrayList<ListNode> arr = new ArrayList<>();
-        ListNode temp = head;
+    public ListNode reverseBetween(ListNode head, int l, int r) {
+        ListNode dummy = new ListNode(-1);
+        ListNode temp = dummy;
+        dummy.next = head;
 
-        while(temp != null){
-            arr.add(temp);
+        for (int i = 1; i <= l - 1; i++) {
             temp = temp.next;
         }
+        ListNode tail1 = temp;
+        ListNode head2 = temp.next;
 
-        int l = left-1;
-        int r = right-1;
-
-        while(l<r){
-            ListNode t1 = arr.get(l);
-            ListNode t2 = arr.get(r);
-
-            arr.set(l,t2);
-            arr.set(r,t1);
-            l++;
-            r--;
+        for (int i = 1; i <= r - l + 1; i++) {
+            temp = temp.next;
         }
-        for(int i = 0; i<arr.size();i++){
-            
-            arr.get(i).next = (i == arr.size()-1) ? null: arr.get(i+1);
-        }
+        ListNode tail2 = temp;
+        ListNode head3 = temp.next;
 
-        return arr.get(0);
-    }
+        tail1.next = null;
+        tail2.next = null;
+
+        reverse(head2);
+
+        tail1.next = tail2;
+        head2.next = head3;
+        return dummy.next;
+        }
 }
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
