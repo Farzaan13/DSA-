@@ -13,19 +13,32 @@ class Node {
 */
 class Solution {
     public Node reverse(Node head) {
-        // code here
-        Node pre = null;
+        if(head.next == null) return head;
+        Node temp = null;
         Node curr = head;
-        Node fwd = null;
-
+        
         while(curr != null){
-            fwd = curr.next;
-            curr.next = pre;
-            curr.prev = fwd;
-            pre = curr;
-            curr = fwd;
+            temp = curr.prev;
+            curr.prev = curr.next;
+            curr.next = temp;
+            curr = curr.prev;
         }
-        return pre;
+        return temp.prev;
+        
+        // 3 POINTER METHOD
+        
+        // Node pre = null;
+        // Node curr = head;
+        // Node fwd = null;
+
+        // while(curr != null){
+        //     fwd = curr.next;
+        //     curr.next = pre;
+        //     curr.prev = fwd;
+        //     pre = curr;
+        //     curr = fwd;
+        // }
+        // return pre;
         
     }
 }
