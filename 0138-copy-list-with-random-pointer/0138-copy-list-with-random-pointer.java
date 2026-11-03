@@ -13,6 +13,7 @@ class Node {
 }
 */
 
+// METHOD 1 USING POINTERS TC - O(N) SC- O(1)
 class Solution {
     public Node deepCopyOf(Node head1) {
         Node head2 = new Node(-1);
@@ -82,6 +83,43 @@ class Solution {
         alternativeConnection(head1, head2);
         pointerAssignment(head1);
         return split(head1);
+    }
+}
+
+
+// METHOD 2 USING HASHMAP TC - O(N) SC - O(N)
+class Solution {
+    public Node copyRandomList(Node head) {
+        HashMap<Node,Node> map = new HashMap();
+        Node a = head;
+        Node dummy = new Node(-1);
+        Node b = dummy;
+        while(a!=null){
+            b.next = new Node(a.val);
+            a = a.next;
+            b = b.next;
+        }
+        a = head;
+        b = dummy.next;
+
+        while(a!=null){
+            map.put(a,b);
+            if(a != null) a = a.next;
+            if(b != null) b = b.next;
+        }
+        
+        a = head;
+        b = dummy.next;
+
+
+        while(a!=null){
+            if(a.random == null) map.get(a).random = null;
+            else map.get(a).random = map.get(a.random);
+            a = a.next;
+        }
+
+        return dummy.next;
+        
     }
 }
 
